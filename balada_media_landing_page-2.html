@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balada Media - Fotografi & Videografi Profesional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Mengimpor font Helvetica/Arial sebagai fallback sans-serif, plus Inter untuk body */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600&display=swap');
+
+        :root {
+            --midnight-900: rgb(13, 18, 32);
+            --midnight-800: hwb(225 3% 83%);
+            --electric-blue: hsl(201, 68%, 13%);
+            --light-cyan: hsl(0, 0%, 99%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--midnight-800);
+            color: #F8F9FA;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Tipografi Khusus */
+        .font-heading {
+            font-family: 'Helvetica', Arial, sans-serif;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-button {
+            background: rgba(28, 146, 210, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid #15445e66;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-button:hover {
+            background: rgba(28, 146, 210, 0.3);
+            border-color: rgba(114, 233, 255, 0.6);
+            box-shadow: 0 0 20px rgba(28, 146, 210, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Text Gradients */
+        .text-gradient {
+            background: linear-gradient(to right, #FFFFFF, var(--light-cyan), var(--electric-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Efek Glow Super Kuat */
+        .glow-text {
+            text-shadow: 0 0 30px rgba(114, 233, 255, 0.5);
+        }
+
+        /* Animasi Preloader */
+        #preloader {
+            transition: opacity 1.2s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+        .preloader-hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .logo-opening {
+            animation: pulse-glow 2s infinite alternate, scale-up 3s ease-out forwards;
+        }
+
+        @keyframes pulse-glow {
+            0% { filter: drop-shadow(0 0 10px rgba(28, 146, 210, 0.3)); }
+            100% { filter: drop-shadow(0 0 25px rgba(114, 233, 255, 0.7)); }
+        }
+        @keyframes scale-up {
+            0% { transform: scale(0.9); opacity: 0; }
+            20% { transform: scale(1); opacity: 1; }
+            80% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.1); opacity: 0; }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Marquee Animasi */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        .marquee-container::before, .marquee-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 150px;
+            height: 100%;
+            z-index: 2;
+        }
+        .marquee-container::before {
+            left: 0;
+            background: linear-gradient(to right, #050A18 0%, transparent 100%);
+        }
+        .marquee-container::after {
+            right: 0;
+            background: linear-gradient(to left, #050A18 0%, transparent 100%);
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 30s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        midnight: {
+                            800: '#0B132B',
+                            900: '#050A18',
+                        },
+                        electric: '#1C92D2',
+                        cyan: '#72E9FF'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased selection:bg-electric selection:text-white relative">
+
+    <div id="preloader" class="fixed inset-0 z-[100] bg-midnight-900 flex flex-col items-center justify-center">
+        <div class="logo-opening flex items-center gap-4">
+            <img src="Gambar/logo.balada.png" alt="Balada Media Logo" class="h-16 w-auto object-contain drop-shadow-[0_0_15px_rgba(114,233,255,0.8)]">
+        </div>
+        <div class="mt-8 text-electric/70 text-sm tracking-widest uppercase">Memuat Halaman...</div>
+    </div>
+
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 px-6 md:px-12 border-b border-transparent">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="Gambar/logo.balada.png" alt="Balada Media Logo" class="h-20 w-auto object-contain group-hover:drop-shadow-[0_0_10px_rgba(114,233,255,0.6)] transition-all duration-300">
+            </a>
+            <div class="hidden md:flex gap-8 text-sm font-medium tracking-wide">
+                <a href="#about" class="hover:text-electric transition-colors">Tentang Kami</a>
+                <a href="#karya" class="hover:text-electric transition-colors">Portofolio</a>
+                <a href="#mitra" class="hover:text-electric transition-colors">Mitra</a>
+            </div>
+            <a href="#contact" class="md:hidden text-sm font-medium text-electric">Hubungi</a>
+        </div>
+    </nav>
+
+    <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-midnight-900 via-midnight-800 to-midnight-500">
+        <!-- Latar Belakang Gradien Midnight -->
+        <div class="absolute inset-0 z-0 bg-gradient-to-br from-[#02050D] via-[#050A18] to-[#0A132E]"></div>
+        
+        <!-- Ambient Grid (Menambah Estetika & Kedalaman) -->
+        <div class="absolute inset-0 z-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)] pointer-events-none"></div>
+
+        <!-- Efek Glow Interaktif yang Mengikuti Kursor -->
+        <div id="cursor-glow" class="absolute top-0 left-0 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(28,146,210,0.15)_0%,rgba(114,233,255,0.05)_40%,transparent_70%)] rounded-full pointer-events-none opacity-0 transition-opacity duration-300 z-0 mix-blend-screen will-change-transform"></div>
+
+        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto mt-20">
+            <h1 class="font-heading font-bold text-4xl md:text-6xl lg:text-7xl leading-tight mb-6 text-gradient glow-text uppercase tracking-wide">
+                Mari Bercerita Di Balada.
+            </h1>
+            <p class="text-base md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+                Setiap brand memiliki cerita. Setiap momen memiliki makna. Dan setiap visual memiliki kekuatan untuk dikenang.
+            </p>
+            <a href="#karya" class="glass-button inline-block px-8 py-4 rounded-full text-white font-medium tracking-wider uppercase text-sm">
+                Lihat Karya Kami
+            </a>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center animate-bounce">
+            <span class="text-xs text-white/50 uppercase tracking-widest mb-2">Scroll</span>
+            <div class="w-[1px] h-12 bg-gradient-to-b from-white/50 to-transparent"></div>
+        </div>
+    </section>
+
+    <section class="relative z-10 -mt-10 max-w-6xl mx-auto px-6 reveal">
+        <div class="glass-panel rounded-2xl p-8 flex flex-col md:flex-row justify-around items-center gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10">
+            <div class="text-center w-full pt-4 md:pt-0">
+                <h3 class="text-4xl font-heading font-bold text-gradient mb-2">100+</h3>
+                <p class="text-sm text-gray-400 uppercase tracking-wider">Klien Ditangani</p>
+            </div>
+            <div class="text-center w-full pt-6 md:pt-0">
+                <h3 class="text-4xl font-heading font-bold text-gradient mb-2">500+</h3>
+                <p class="text-sm text-gray-400 uppercase tracking-wider">Proyek Selesai</p>
+            </div>
+            <div class="text-center w-full pt-6 md:pt-0">
+                <h3 class="text-4xl font-heading font-bold text-gradient mb-2">3+</h3>
+                <p class="text-sm text-gray-400 uppercase tracking-wider">Tahun Standar Industri</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 relative">
+        <div class="absolute top-1/2 left-0 w-[40rem] h-[40rem] bg-electric/20 rounded-full blur-[120px] -translate-y-1/2 pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="glass-panel rounded-3xl p-8 md:p-16 relative overflow-hidden group hover:border-electric/30 transition-colors duration-500 reveal">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-cyan/10 rounded-full blur-[80px] group-hover:bg-cyan/20 transition-all duration-700"></div>
+                
+                <div class="relative z-10 max-w-3xl">
+                    <h2 class="font-heading font-bold text-3xl md:text-4xl mb-6 flex items-center gap-4">
+                        <span class="w-12 h-[2px] bg-electric inline-block"></span>
+                        Mengenal Balada Media
+                    </h2>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                        Balada Media hadir sebagai creative media partner yang membantu mengubah ide menjadi karya visual yang autentik, menarik, dan berdampak. Melalui layanan fotografi, videografi, produksi konten, hingga creative branding, kami percaya bahwa visual bukan sekadar dokumentasi melainkan cara terbaik untuk menyampaikan cerita.
+                    </p>
+                    <p class="text-gray-400 text-base leading-relaxed">
+                        Layanan utama kami mencakup <strong class="text-electric font-semibold">Event Documentation</strong>, <strong class="text-electric font-semibold">Visual Production</strong>, <strong class="text-electric font-semibold">Social Media Branding</strong>, hingga dokumentasi momen penting seperti <strong class="text-electric font-semibold">Wisuda</strong> dan <strong class="text-electric font-semibold">Wedding</strong>. Balada Media adalah creative media yang berbasis di Aceh
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="karya" class="py-12 relative">
+        <div class="absolute bottom-0 right-0 w-[40rem] h-[40rem] bg-cyan/10 rounded-full blur-[120px] pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 mb-16 reveal">
+            <h2 class="font-heading font-bold text-3xl md:text-4xl flex items-center gap-4 justify-end text-right">
+                Karya Visual
+                <span class="w-12 h-[2px] bg-electric inline-block"></span>
+            </h2>
+        </div>
+
+        <div class="flex flex-col gap-8 w-full px-4 md:px-12 max-w-[100rem] mx-auto reveal">
+            
+            <!-- Bar 1: Fotografi -->
+            <div class="group relative w-full h-[400px] md:h-[500px] rounded-3xl overflow-hidden glass-panel hover:border-electric/40 transition-all duration-700 cursor-pointer">
+                <!-- Slider Container -->
+                <div id="slider-foto" class="absolute inset-0 w-full h-full z-0 bg-midnight-900">
+                    <img src="Gambar/DSC02472.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1540039155733-d7696c482605?auto=format&fit=crop&w=1000&q=80'" alt="Stage Photography" class="slide-foto absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 scale-105">
+                    <img src="Gambar/DSC03181.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1533174000255-a63b24ee388a?auto=format&fit=crop&w=1000&q=80'" alt="Stage Photography" class="slide-foto absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 scale-100">
+                    <img src="Gambar/MRY07717.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1470229722913-7c090be5f524?auto=format&fit=crop&w=1000&q=80'" alt="Stage Photography" class="slide-foto absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 scale-100">
+                    <img src="Gambar/MRY07723.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=1000&q=80'" alt="Stage Photography" class="slide-foto absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 scale-100">
+                    <img src="Gambar/MRY07773.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1493225457284-0bf53ce02748?auto=format&fit=crop&w=1000&q=80'" alt="Stage Photography" class="slide-foto absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 scale-100">
+                    <img src="Gambar/MRY07985.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1000&q=80'" alt="Stage Photography" class="slide-foto absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 scale-100">
+                    <img src="Gambar/MRY08146.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=1000&q=80'" alt="Stage Photography" class="slide-foto absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 scale-100">
+                    <img src="Gambar/MRY08395.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1000&q=80'" alt="Stage Photography" class="slide-foto absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 scale-100">
+                    <img src="Gambar/MRY08483.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1510511459019-5d26af373413?auto=format&fit=crop&w=1000&q=80'" alt="Stage Photography" class="slide-foto absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 scale-100">
+                    <img src="Gambar/MRY09041.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1533174000255-a63b24ee388a?auto=format&fit=crop&w=1000&q=80'" alt="Stage Photography" class="slide-foto absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-0 scale-100">
+                </div>
+
+                <!-- Gradient Overlay & Content -->
+                <div class="absolute inset-0 bg-gradient-to-r from-midnight-900/90 via-midnight-900/50 to-transparent z-10 flex flex-col justify-center p-8 md:p-16">
+                    <div class="max-w-xl transform group-hover:translate-x-4 transition-transform duration-500">
+                        <h3 class="font-heading font-bold text-3xl md:text-5xl text-white mb-4 drop-shadow-lg">Karya Fotografi</h3>
+                        <p class="text-gray-200 text-sm md:text-base mb-6 drop-shadow-md">
+                            Presisi pencahayaan dan komposisi profesional. Kami menangkap setiap detail untuk menghasilkan aset visual statis dengan standar industri tertinggi.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs text-white border border-white/20">Stage Photography</span>
+                            <span class="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs text-white border border-white/20">Wedding & Graduation</span>
+                            <span class="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs text-white border border-white/20">Event Documentation</span>
+                        </div>
+                        <a href="https://www.instagram.com/baladamedia/" target="_blank" class="glass-button inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-sm font-medium z-20 relative">
+                            Lihat di Instagram
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tombol Navigasi Manual -->
+                <button onclick="changeSlide('foto', -1, event)" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-sm border border-white/20 transition-all opacity-100 md:opacity-0 group-hover:opacity-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button onclick="changeSlide('foto', 1, event)" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-sm border border-white/20 transition-all opacity-100 md:opacity-0 group-hover:opacity-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+
+            <!-- Bar 2: Videografi -->
+            <div class="group relative w-full h-[400px] md:h-[500px] rounded-3xl overflow-hidden glass-panel hover:border-electric/40 transition-all duration-700 cursor-pointer">
+                <!-- Slider Container -->
+                <div id="slider-video" class="absolute inset-0 w-full h-full z-0 bg-midnight-900">
+                    <video src="Gambar/AM%20LARA%20II.mov" autoplay muted loop playsinline class="slide-video absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 opacity-100 scale-105"></video>
+                </div>
+
+                <!-- Gradient Overlay & Content -->
+                <div class="absolute inset-0 bg-gradient-to-l from-midnight-900/90 via-midnight-900/50 to-transparent z-10 flex flex-col justify-center items-end p-8 md:p-16 text-right">
+                    <div class="max-w-xl transform group-hover:-translate-x-4 transition-transform duration-500 flex flex-col items-end">
+                        <h3 class="font-heading font-bold text-3xl md:text-5xl text-white mb-4 drop-shadow-lg">Produksi Video</h3>
+                        <p class="text-gray-200 text-sm md:text-base mb-6 drop-shadow-md">
+                            Sinematografi dinamis dan penceritaan visual yang terstruktur. Merangkai momen dan pesan brand Anda dalam resolusi tinggi yang memukau.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8 justify-end">
+                            <span class="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs text-white border border-white/20">Cinematic</span>
+                            <span class="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs text-white border border-white/20">Company Profile</span>
+                            <span class="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs text-white border border-white/20">Event Documentation</span>
+                        </div>
+                        <a href="https://www.instagram.com/baladamedia/" target="_blank" class="glass-button inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-sm font-medium z-20 relative">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Lihat Reels Kami
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tombol Navigasi Manual -->
+                <button onclick="changeSlide('video', -1, event)" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-sm border border-white/20 transition-all opacity-100 md:opacity-0 group-hover:opacity-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button onclick="changeSlide('video', 1, event)" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-sm border border-white/20 transition-all opacity-100 md:opacity-0 group-hover:opacity-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+            
+        </div>
+    </section>
+
+    <section id="mitra" class="py-16 relative reveal">
+        <div class="text-center mb-10 px-6">
+            <h2 class="font-heading font-bold text-2xl md:text-3xl text-white mb-2">Telah Dipercaya Oleh</h2>
+            <p class="text-gray-400 text-sm">Berkolaborasi dengan berbagai institusi dan brand.</p>
+        </div>
+        
+        <div class="marquee-container py-8 border-y border-white/5 bg-white/[0.01]">
+            <div class="marquee-content flex gap-16 items-center px-8">
+                <h3 class="text-xl font-bold text-white/40 tracking-widest uppercase">BGN badan Gizi Nasional</h3>
+                <h3 class="text-xl font-bold text-white/40 tracking-widest uppercase">EKRAF</h3>
+                <h3 class="text-xl font-bold text-white/40 tracking-widest uppercase">PW IPNU ACEH</h3>
+                <h3 class="text-xl font-bold text-white/40 tracking-widest uppercase">LARA FEST</h3>
+                <h3 class="text-xl font-bold text-white/40 tracking-widest uppercase">HANAKATA COFFE</h3>
+                
+                <!-- Duplikat untuk animasi putus (seamless loop) -->
+                <h3 class="text-xl font-bold text-white/40 tracking-widest uppercase">CROCAM STUDIO</h3>
+                <h3 class="text-xl font-bold text-white/40 tracking-widest uppercase">DUTA RAYEUK</h3>
+                <h3 class="text-xl font-bold text-white/40 tracking-widest uppercase">MATCHASI</h3>
+                <h3 class="text-xl font-bold text-white/40 tracking-widest uppercase">ROMEN KUPI</h3>
+                <h3 class="text-xl font-bold text-white/40 tracking-widest uppercase">AREA COFFE SPACE</h3>
+                <h3 class="text-xl font-bold text-white/40 tracking-widest uppercase">NOVE COFFE</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 relative max-w-7xl mx-auto px-6 reveal">
+        <h2 class="font-heading font-bold text-2xl md:text-3xl text-white mb-10 text-center">Cerita Klien Kami</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Testimoni 1 -->
+            <div class="glass-panel p-6 rounded-2xl flex flex-col gap-4">
+                <div class="flex text-yellow-400 text-sm">
+                    ★★★★★
+                </div>
+                <p class="text-gray-300 text-sm leading-relaxed italic flex-grow">
+                    "Sangat puas dengan hasil video dokumentasi acara perusahaan kami. Kualitas gambar sangat tajam, editingnya modern, dan tim Balada Media sangat profesional di lapangan."
+                </p>
+                <div class="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
+                    <img src="https://ui-avatars.com/api/?name=kevin+alentao&background=1C92D2&color=fff" alt="Klien" class="w-10 h-10 rounded-full">
+                    <div>
+                        <h4 class="text-white text-sm font-semibold">KEVIN ALENTA</h4>
+                        <p class="text-gray-500 text-xs">DIREKTUR RELAXI PROJECT</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimoni 2 -->
+            <div class="glass-panel p-6 rounded-2xl flex flex-col gap-4">
+                <div class="flex text-yellow-400 text-sm">
+                    ★★★★★
+                </div>
+                <p class="text-gray-300 text-sm leading-relaxed italic flex-grow">
+                    "balada TOP TOP TOPPPPP"
+                </p>
+                <div class="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
+                    <img src="https://ui-avatars.com/api/?name=LArafest&background=1C92D2&color=fff" alt="Klien" class="w-10 h-10 rounded-full">
+                    <div>
+                        <h4 class="text-white text-sm font-semibold">Lara Fest</h4>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimoni 3 -->
+            <div class="glass-panel p-6 rounded-2xl flex flex-col gap-4">
+                <div class="flex text-yellow-400 text-sm">
+                    ★★★★★
+                </div>
+                <p class="text-gray-300 text-sm leading-relaxed italic flex-grow">
+                    "Balada selalu punya cara untuk bercerita dengan visual nya, Balada emang topppp."
+                </p>
+                <div class="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
+                    <img src="https://ui-avatars.com/api/?name=Umair&background=1C92D2&color=fff" alt="Klien" class="w-10 h-10 rounded-full">
+                    <div>
+                        <h4 class="text-white text-sm font-semibold">Umair</h4>
+                        <p class="text-gray-500 text-xs">Owner Matchasi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="fixed bottom-6 right-6 z-50">
+        <!-- Tombol Buka Chat -->
+        <button id="chat-toggle" class="w-14 h-14 rounded-full glass-button flex items-center justify-center shadow-[0_0_20px_rgba(28,146,210,0.5)] group relative">
+            <span class="absolute top-0 right-0 w-3 h-3 bg-cyan rounded-full border-2 border-midnight-900"></span>
+            <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+        </button>
+
+        <!-- Kotak Chat Panel -->
+        <div id="chat-panel" class="absolute bottom-20 right-0 w-80 sm:w-96 glass-panel rounded-2xl overflow-hidden opacity-0 translate-y-4 pointer-events-none transition-all duration-300 origin-bottom-right">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-midnight-800 to-midnight-900 p-4 border-b border-white/10 flex justify-between items-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-electric/20"></div>
+                <div class="flex items-center gap-3 relative z-10">
+                    <div class="w-10 h-10 rounded-full bg-electric/20 flex items-center justify-center border border-electric/50 p-1.5">
+                        <!-- SVG Logo Vektor dari logo.balada.jpg -->
+                        <svg viewBox="0 0 100 40" class="w-full h-full text-cyan" fill="currentColor">
+                            <polygon points="10,13 85,3 85,9.5" />
+                            <polygon points="10,16 88,13 83,19.5" />
+                            <polygon points="11,22 81,24 30,31" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-heading font-bold text-sm text-white drop-shadow-[0_0_10px_rgba(114,233,255,0.8)]">Mari Berhubung</h4>
+                        <p class="text-xs text-cyan flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 bg-cyan rounded-full inline-block animate-pulse"></span>
+                            Standby
+                        </p>
+                    </div>
+                </div>
+                <button id="chat-close" class="text-gray-400 hover:text-white relative z-10">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <!-- Body -->
+            <div class="p-5 bg-midnight-900/80 backdrop-blur-md">
+                <div class="bg-white/5 border border-white/10 rounded-2xl rounded-tl-sm p-3 mb-4 max-w-[90%]">
+                    <p class="text-sm text-gray-200">Halo! Ada kebutuhan dokumentasi atau produksi visual yang bisa kami bantu?</p>
+                </div>
+                
+                <div class="flex flex-col gap-2 mt-4">
+                    <a href="https://wa.me/6282259015360?text=Halo%20Balada%20Media,%20saya%20ingin%20bertanya%20mengenai%20harga%20layanan%20dokumentasi." target="_blank" class="glass-button text-left px-4 py-2.5 rounded-xl text-sm text-white flex justify-between items-center group">
+                        Tanya Harga & Paket
+                        <svg class="w-4 h-4 text-cyan opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="https://wa.me/6282259015360?text=Halo,%20saya%20ingin%20melihat%20portofolio%20lengkap%20Balada%20Media." target="_blank" class="glass-button text-left px-4 py-2.5 rounded-xl text-sm text-white flex justify-between items-center group">
+                        Lihat Portofolio Lain
+                        <svg class="w-4 h-4 text-cyan opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="https://wa.me/6282259015360?text=Halo,%20saya%20ada%20kebutuhan%20konsep%20visual/video%20dan%20ingin%20berkonsultasi." target="_blank" class="glass-button text-left px-4 py-2.5 rounded-xl text-sm text-white flex justify-between items-center group">
+                        Konsultasi Konsep Produksi
+                        <svg class="w-4 h-4 text-cyan opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-[#050A18] pt-12 pb-6 border-t border-white/5 relative z-10 text-center md:text-left" id="contact">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col gap-8">
+            
+            <!-- Bagian Atas Footer: Logo & Sosial Media -->
+            <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+                <div>
+                    <a href="#" class="font-heading font-bold text-xl tracking-wider flex items-center gap-3 justify-center md:justify-start mb-2 group">
+                        <img src="Gambar/logo.balada.png" alt="Balada Media Logo" class="h-10 w-auto object-contain transition-colors duration-300">
+                        BALADA MEDIA
+                    </a>
+                    <p class="text-white/50 text-sm">Fotografi & Videografi Profesional.</p>
+                </div>
+                
+                <div class="flex gap-4 justify-center md:justify-end">
+                    <!-- Link Instagram -->
+                    <a href="https://www.instagram.com/baladamedia/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-electric hover:border-electric transition-colors hover:scale-110 transform duration-300 shadow-lg hover:shadow-[0_0_15px_rgba(28,146,210,0.4)]" aria-label="Instagram">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                        </svg>
+                    </a>
+                    <!-- Link TikTok -->
+                    <a href="https://www.tiktok.com/@baladamedia" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-cyan hover:border-cyan transition-colors hover:scale-110 transform duration-300 shadow-lg hover:shadow-[0_0_15px_rgba(114,233,255,0.4)]" aria-label="TikTok">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bagian Bawah Footer: Copyright -->
+            <div class="pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-white/40 text-xs tracking-wide">
+                    &copy; 2026 Balada Media. All Rights Reserved.
+                </p>
+                <div class="flex gap-4 text-white/40 text-xs">
+                    <a href="#" class="hover:text-cyan transition-colors">Privacy Policy</a>
+                    <span class="w-1 h-1 bg-white/20 rounded-full mt-1.5"></span>
+                    <a href="#" class="hover:text-cyan transition-colors">Terms of Service</a>
+                </div>
+            </div>
+            
+        </div>
+    </footer>
+
+    <script>
+        // 1. Preloader Logic
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                preloader.classList.add('preloader-hidden');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 1200);
+            }, 2500); // Tampil 2.5 detik
+        });
+
+        // 2. Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-midnight-900/80', 'backdrop-blur-md', 'border-white/10');
+                nav.classList.remove('border-transparent');
+            } else {
+                nav.classList.remove('bg-midnight-900/80', 'backdrop-blur-md', 'border-white/10');
+                nav.classList.add('border-transparent');
+            }
+        });
+
+        // 3. Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealFunction = () => {
+            const windowHeight = window.innerHeight;
+            revealElements.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealFunction);
+        revealFunction(); // Trigger on load
+
+        // 4. Chat Widget Toggle
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatClose = document.getElementById('chat-close');
+        const chatPanel = document.getElementById('chat-panel');
+
+        const toggleChat = () => {
+            const isClosed = chatPanel.classList.contains('opacity-0');
+            if (isClosed) {
+                chatPanel.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+                chatPanel.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                chatPanel.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+                chatPanel.classList.remove('opacity-100', 'translate-y-0');
+            }
+        };
+
+        chatToggle.addEventListener('click', toggleChat);
+        chatClose.addEventListener('click', toggleChat);
+
+        // 5. Slider Logic (Foto & Video)
+        const sliders = {
+            foto: { current: 0, elements: document.querySelectorAll('.slide-foto'), interval: null },
+            video: { current: 0, elements: document.querySelectorAll('.slide-video'), interval: null }
+        };
+
+        function showSlide(type, index) {
+            const slides = sliders[type].elements;
+            if(slides.length === 0) return;
+
+            // Hide old
+            const oldSlide = slides[sliders[type].current];
+            oldSlide.classList.remove('opacity-100', 'scale-105');
+            oldSlide.classList.add('opacity-0', 'scale-100');
+            if (oldSlide.tagName === 'VIDEO') {
+                oldSlide.pause();
+            }
+
+            // Update index
+            sliders[type].current = index;
+            if (sliders[type].current >= slides.length) sliders[type].current = 0;
+            if (sliders[type].current < 0) sliders[type].current = slides.length - 1;
+
+            // Show new
+            const newSlide = slides[sliders[type].current];
+            newSlide.classList.remove('opacity-0', 'scale-100');
+            newSlide.classList.add('opacity-100', 'scale-105');
+            if (newSlide.tagName === 'VIDEO') {
+                newSlide.play().catch(() => {});
+            }
+        }
+
+        function changeSlide(type, direction, event) {
+            if(event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            showSlide(type, sliders[type].current + direction);
+            resetInterval(type); // Reset timer jika digeser manual
+        }
+
+        function startIntervals() {
+            sliders.foto.interval = setInterval(() => changeSlide('foto', 1), 3500);
+            sliders.video.interval = setInterval(() => changeSlide('video', 1), 3500);
+        }
+
+        function resetInterval(type) {
+            clearInterval(sliders[type].interval);
+            sliders[type].interval = setInterval(() => changeSlide(type, 1), 3500);
+        }
+
+        // Mulai slider setelah halaman dimuat
+        window.addEventListener('load', () => {
+            setTimeout(startIntervals, 3000); // Mulai setelah preloader selesai
+        });
+
+        // 6. Efek Kursor Interaktif (Hero Section)
+        const heroSection = document.getElementById('hero');
+        const cursorGlow = document.getElementById('cursor-glow');
+
+        if (heroSection && cursorGlow) {
+            heroSection.addEventListener('mousemove', (e) => {
+                const rect = heroSection.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                cursorGlow.style.opacity = '1';
+                // Kurangi 300px agar kursor tepat berada di tengah lingkaran (ukuran glow 600x600)
+                cursorGlow.style.transform = `translate(${x - 300}px, ${y - 300}px)`;
+            });
+
+            heroSection.addEventListener('mouseleave', () => {
+                cursorGlow.style.opacity = '0';
+            });
+        }
+
+    </script>
+</body>
+</html>
